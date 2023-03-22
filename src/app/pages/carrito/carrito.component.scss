@@ -1,0 +1,76 @@
+.full-container{
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+table {
+    width: 100%;
+}
+
+th{
+    color: black;
+    font-weight: bold;
+    font-size: medium;
+}
+
+td {
+    padding: auto;
+    text-align: left;
+    font-size: medium;
+}
+
+input{
+    width: 10%;
+    height: 100%;
+    text-align: center;
+}
+
+.total{
+    font-size: 1.5em;
+}
+
+.container-total-right{
+   text-align: right;
+}
+
+.line{
+    width: 30%;
+    border-top: 1px solid #888;
+    margin-left: auto;
+}
+
+h2{
+    color: #7c9bdf;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+h1{
+    color: #7c9bdf;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+.comprar{
+    background-color: rgb(53, 201, 53);
+    color: white;
+    width: 10%;
+    height: 15%;
+    font-size: 1.2em;
+    margin-right: 7px;
+}
+
+.cancelar{
+    font-size: 1.1em;
+}
+
+.container-text-center{
+    button{
+        float: right;
+        margin-bottom: 10px;
+        margin-left: 7px;
+    }
+}

@@ -1,0 +1,24 @@
+
+
+mat-form-field{
+    // display: inline-block;
+    width: 100%;
+    // height: 5%;
+}
+
+// mat-icon{
+//     float: right;
+// }
+
+.price{
+    text-align: right;
+}
+
+input.price::-webkit-outer-spin-button,
+input.price::-webkit-inner-spin-button{
+    display: none;
+}
+
+// input.price{
+//     -moz-appearance: textfield;
+// }

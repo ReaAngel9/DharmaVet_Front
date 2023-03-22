@@ -1,0 +1,48 @@
+
+<div class="main-container">
+    <ngb-carousel >
+        <ng-template ngbSlide *ngFor="let img of images">
+            <div class="picsum-img-wrapper">
+                <img [src]="img.imageSrc" alt="img.imageAlt" />
+            </div>
+            <div class="carousel-caption">
+                <h3>Dharma Vet</h3>
+                <p>Salud y Bienestar para tu mascota</p>
+            </div>
+        </ng-template>
+    </ngb-carousel>
+    <br>
+
+    <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input>
+    </mat-form-field>
+    <mat-icon>filter_list</mat-icon>
+    
+    <div class="card-container" >
+        <mat-card class="main-card" *ngFor="let prod of filter ">
+            <mat-card-header>
+                <mat-card-title>{{prod.name}}</mat-card-title>
+                <mat-card-subtitle>${{prod.price}}</mat-card-subtitle>
+            </mat-card-header>
+            
+            <mat-card-content >
+                <p>{{prod.description}}</p>
+            </mat-card-content>
+            
+            <form [formGroup]="inputForm" *ngIf="active == prod.id && countCart" >
+                <mat-form-field >
+                    <input matInput [(ngModel)]="ammount" formControlName="count" type="number" placeholder="Cantidad" min="1" required>
+                    <button [ngClass]="{'disabled': active==0}" mat-button (click)="AddCart(prod.id)" [disabled]="inputForm.invalid" class="check"><mat-icon>check</mat-icon></button>
+                </mat-form-field>
+            </form>
+        
+            <mat-card-actions>
+                <button mat-button (click)="Activate(prod.id)" ><mat-icon>add_shopping_cart</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    <div class="no-data" >
+        <p *ngIf="noData">No hay datos que coincidan con "{{input.value}}"</p>
+    </div>
+</div>

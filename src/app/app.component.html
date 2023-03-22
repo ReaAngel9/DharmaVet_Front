@@ -1,0 +1,9 @@
+<app-header (onToggleSidenav)="onToggleSidenav($event)"></app-header>
+<main>
+  <router-outlet>
+      <app-body
+      [collapsed]="isSideNavCollapsed"
+      [screenWidth]="screenWidth">
+    </app-body>
+</router-outlet>
+</main>
