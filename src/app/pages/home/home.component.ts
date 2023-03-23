@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductosService } from 'src/app/shared/services/productos.service';
 
 
 const COLUMNS_SCHEMA = [
@@ -79,7 +80,11 @@ export class HomeComponent implements OnInit {
   filter: any;
   inputForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private carousel: NgbCarouselModule) {
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private carousel: NgbCarouselModule, 
+    private productosService: ProductosService) {
     this.inputForm = this.fb.group({
       count: ['', Validators.required]
     });
@@ -87,7 +92,9 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit(): void { 
-    this.filter = this.products;
+    this.filter = this.productosService.getProducts();
+    console.log(this.filter);
+    
   }
   
   Activate(element: any){
