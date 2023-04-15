@@ -1,10 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductosService } from 'src/app/shared/services/productos.service';
-
 
 const COLUMNS_SCHEMA = [
   {
@@ -61,14 +59,14 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  products = [ 
-    {id: 1, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-    {id: 2, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-    {id: 3, name: 'Halo', price: 1.0079, description: 'H', ammount: 1},
-    {id: 4, name: 'Zelda', price: 1.0079, description: 'H', ammount: 1},
-    {id: 5, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-    {id: 6, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-  ];
+  // products = [
+  //   {id: 1, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+  //   {id: 2, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+  //   {id: 3, name: 'Halo', price: 1.0079, description: 'H', ammount: 1},
+  //   {id: 4, name: 'Zelda', price: 1.0079, description: 'H', ammount: 1},
+  //   {id: 5, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+  //   {id: 6, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+  // ];
 
   selectedIndex: number = 0;
   columnsSchema: any = COLUMNS_SCHEMA;
@@ -81,22 +79,24 @@ export class HomeComponent implements OnInit {
   inputForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router, 
-    private carousel: NgbCarouselModule, 
-    private productosService: ProductosService) {
+    private fb: FormBuilder,
+    private router: Router,
+    private productsService: ProductosService,
+    private carousel: NgbCarouselModule,) {
     this.inputForm = this.fb.group({
       count: ['', Validators.required]
     });
 
    }
 
-  ngOnInit(): void { 
-    this.filter = this.productosService.getProducts();
-    console.log(this.filter);
-    
+  ngOnInit(): void {
+    this.productsService.getProducts().subscribe((data: any) => {
+      console.log(data.productos);
+      this.filter = data.productos;
+    });
+
   }
-  
+
   Activate(element: any){
     this.active = element;
     this.countCart = !this.countCart;
@@ -109,16 +109,26 @@ export class HomeComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value; 
-    this.filter = this.products.filter((item: any) => {
-       return item.name.toLowerCase().includes(filterValue.toLowerCase())  
-    })
-    if(this.filter.length == 0){
-      this.noData = true;
-    }else{
-      this.noData = false;
-    }  
-    
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.productsService.getProducts().subscribe((data: any) => {
+      this.filter = data.productos.filter((item: any) => {
+        return item.name.toLowerCase().includes(filterValue.toLowerCase())
+      });
+      if(this.filter.length == 0){
+        this.noData = true;
+      }else{
+        this.noData = false;
+      }
+    });
+    // this.filter = this.products.filter((item: any) => {
+    //    return item.name.toLowerCase().includes(filterValue.toLowerCase())
+    // })
+    // if(this.filter.length == 0){
+    //   this.noData = true;
+    // }else{
+    //   this.noData = false;
+    // }
+
   }
 
 }
