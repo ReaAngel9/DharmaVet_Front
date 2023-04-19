@@ -1,14 +1,17 @@
-h2{
-    color: #2a7c9f;
-    font-weight: bold;
+
+table {
+  width: 100%;
 }
 
-
-ul{
+th{
+  color: black;
   font-weight: bold;
+  font-size: medium;
+}
 
-  ul{
-    font-weight: normal;
-  }
-
+td {
+  padding: auto;
+  text-align: left;
+  font-size: medium;
+  margin-right: 3rem;
 }

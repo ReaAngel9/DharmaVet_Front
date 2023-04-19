@@ -91,7 +91,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.productsService.getProducts().subscribe((data: any) => {
-      console.log(data.products);
       this.filter = data.products;
     });
 
@@ -107,6 +106,7 @@ export class HomeComponent implements OnInit {
     this.Activate(element);
     this.productsService.addProductToCart(element,ammount).subscribe((response: any) => {
     });
+    this.ammount = 0;
   }
 
   applyFilter(event: Event) {
