@@ -59,14 +59,14 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  // products = [
-  //   {id: 1, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-  //   {id: 2, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-  //   {id: 3, name: 'Halo', price: 1.0079, description: 'H', ammount: 1},
-  //   {id: 4, name: 'Zelda', price: 1.0079, description: 'H', ammount: 1},
-  //   {id: 5, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-  //   {id: 6, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-  // ];
+  products = [
+    {id: 1, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+    {id: 2, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+    {id: 3, name: 'Halo', price: 1.0079, description: 'H', ammount: 1},
+    {id: 4, name: 'Zelda', price: 1.0079, description: 'H', ammount: 1},
+    {id: 5, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+    {id: 6, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
+  ];
 
   selectedIndex: number = 0;
   columnsSchema: any = COLUMNS_SCHEMA;
@@ -91,8 +91,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.productsService.getProducts().subscribe((data: any) => {
-      console.log(data.productos);
-      this.filter = data.productos;
+      console.log(data.products);
+      this.filter = data.products;
     });
 
   }
@@ -102,16 +102,17 @@ export class HomeComponent implements OnInit {
     this.countCart = !this.countCart;
   }
 
-  AddCart(element: any){
+  AddCart(element: any, ammount: any){
     // this.router.navigate(['/carrito']);
-    console.log(element);
     this.Activate(element);
+    this.productsService.addProductToCart(element,ammount).subscribe((response: any) => {
+    });
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.productsService.getProducts().subscribe((data: any) => {
-      this.filter = data.productos.filter((item: any) => {
+      this.filter = data.products.filter((item: any) => {
         return item.name.toLowerCase().includes(filterValue.toLowerCase())
       });
       if(this.filter.length == 0){

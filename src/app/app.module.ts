@@ -14,6 +14,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BodyComponent } from './pages/body/body.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CartComponent } from './pages/ventas/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CarritoComponent,
     HomeComponent,
     VentasComponent,
-    BodyComponent
+    BodyComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,37 @@
+<mat-list *ngFor="let item of cart">
+  <h2>Carrito</h2>
+
+  <ul>Nombre
+    <ul>{{item.name}}</ul>
+  </ul>
+
+  <ul>Descripción
+    <ul>{{item.description}}</ul>
+  </ul>
+
+  <ul>Cantidad
+    <ul>{{item.ammount}}</ul>
+  </ul>
+
+  <mat-divider></mat-divider>
+
+  <ul>Precio
+    <ul>${{item.price}}</ul>
+  </ul>
+    <!-- <div matListItemTitle class="nombre">Nombre </div>
+    <div matListItemLine class="nombreItem">{{item.name}}</div>
+
+    <div matListItemTitle class="descripcion">Descripción </div>
+    <div matListItemLine>{{item.description}}</div>
+
+    <div matListItemTitle class="cantidad">Cantidad</div>
+    <div matListItemLine>{{item.ammount}}</div> -->
+
+
+  <!-- <mat-list-item>
+    <div matListItemTitle class="precio">Precio </div>
+    <div matListItemLine>{{item.price}}</div>
+  </mat-list-item> -->
+
+</mat-list>
+
