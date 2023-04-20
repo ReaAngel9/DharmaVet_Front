@@ -48,6 +48,7 @@
                 <button mat-button (click)="Activate(prod.id)" ><mat-icon>add_shopping_cart</mat-icon></button>
                 <button mat-icon-button color="warn" (click)="deleteProduct(prod.name, prod.id)"><mat-icon>delete</mat-icon></button>
                 <button mat-icon-button color="primary"  (click)="editProduct(prod.id)"><mat-icon>edit</mat-icon></button>
+                <button mat-icon-button color="primary"  (click)="barcodeRedirect(prod.id)"><mat-icon>bar_chart</mat-icon></button>
             </mat-card-actions>
 
         </mat-card>

@@ -1,1 +1,6 @@
 <img [src]="imagenUrl" alt="Imagen">
+
+<mat-form-field>
+  <mat-label>Código de Producto</mat-label>
+  <input matInput class="barcode" type="text" value="Código" [(ngModel)]="barcode" (keyup.enter)="onEnterKeyPressed(barcode)" >
+</mat-form-field>

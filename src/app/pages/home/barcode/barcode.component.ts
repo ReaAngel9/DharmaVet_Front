@@ -9,6 +9,7 @@ import { ProductosService } from 'src/app/shared/services/productos.service';
 export class BarcodeComponent implements OnInit {
 
   imagenUrl: string = '';
+  barcode: string = '';
 
   constructor(private productsService: ProductosService) { }
 
@@ -20,6 +21,14 @@ export class BarcodeComponent implements OnInit {
         this.imagenUrl = reader.result as string;
       };
     });
+  }
+
+  onEnterKeyPressed(event: any) {
+    this.barcode = this.barcode.slice(0, -1);
+    this.productsService.addProductToCart(parseInt(this.barcode),1).subscribe((data: any) => {
+      this.ngOnInit();
+    });
+    this.barcode = ''
   }
 
 }
