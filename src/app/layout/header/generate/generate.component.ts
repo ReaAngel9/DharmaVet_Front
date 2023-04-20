@@ -16,7 +16,7 @@ export class GenerateComponent implements OnInit {
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<GenerateComponent>, private productsService: ProductosService, private router: Router) {
     this.generateForm = this.fb.group({
       name: ['', Validators.required],
-      price: ['', Validators.required, Validators.min(0)],
+      price: ['', Validators.required],
       description: ['', Validators.required],
     });
   }
