@@ -1,6 +1,22 @@
-<img [src]="imagenUrl" alt="Imagen">
 
-<mat-form-field>
-  <mat-label>Código de Producto</mat-label>
-  <input matInput class="barcode" type="text" value="Código" [(ngModel)]="barcode" (keyup.enter)="onEnterKeyPressed(barcode)" >
-</mat-form-field>
+<div class = "img-container">
+    <img [src]="imagenUrl" alt="Imagen">
+</div>
+
+<div class="card-container" >
+    <mat-card class="main-card" *ngFor="let prod of products ">
+        <mat-card-header>
+            <mat-card-title>{{prod.name}}</mat-card-title>
+            <mat-card-subtitle>${{prod.price}}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content >
+            <p>{{prod.description}}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+        <button mat-icon-button color="primary"  (click)="loadBarcode(prod.id)"><mat-icon>bar_chart</mat-icon></button>
+    </mat-card-actions>
+
+    </mat-card>
+</div>

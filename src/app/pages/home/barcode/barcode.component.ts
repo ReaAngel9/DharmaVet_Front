@@ -10,6 +10,7 @@ export class BarcodeComponent implements OnInit {
 
   imagenUrl: string = '';
   barcode: string = '';
+  products: any = [];
 
   constructor(private productsService: ProductosService) { }
 
@@ -21,6 +22,11 @@ export class BarcodeComponent implements OnInit {
         this.imagenUrl = reader.result as string;
       };
     });
+    this.productsService.getProducts().subscribe((data: any) => {
+      this.products = data.products;
+      console.log(this.products);
+      
+    });
   }
 
   onEnterKeyPressed(event: any) {
@@ -31,4 +37,13 @@ export class BarcodeComponent implements OnInit {
     this.barcode = ''
   }
 
+  loadBarcode(id: number) {
+    this.productsService.getBarcode(id).subscribe((data: any) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(data);
+      reader.onloadend = () => {
+        this.imagenUrl = reader.result as string;
+      };
+    });
+  }
 }
