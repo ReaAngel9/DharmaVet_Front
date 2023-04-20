@@ -47,7 +47,7 @@ export class ProductosService {
   }
 
   generateProduct(name: string, price: number, description: string){
-    return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description});
+    return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description, responseType: 'blob'});
   }
 
   deleteProduct(id: number){
@@ -57,4 +57,9 @@ export class ProductosService {
   editProduct(id: number, data: any){
     return this.httpClient.put(this.url + '/products/' + id, data);
   }
+
+  getBarcode(id: number){
+    return this.httpClient.get(this.url + '/products/barcode/' + id, { responseType: 'blob' });
+  }
+
 }

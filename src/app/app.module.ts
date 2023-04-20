@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BodyComponent } from './pages/body/body.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CartComponent } from './pages/ventas/cart/cart.component';
+import { BarcodeComponent } from './pages/home/barcode/barcode.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CartComponent } from './pages/ventas/cart/cart.component';
     HomeComponent,
     VentasComponent,
     BodyComponent,
-    CartComponent
+    CartComponent,
+    BarcodeComponent
   ],
   imports: [
     BrowserModule,

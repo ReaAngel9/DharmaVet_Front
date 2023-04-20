@@ -12,6 +12,7 @@ import { ProductosService } from 'src/app/shared/services/productos.service';
 export class GenerateComponent implements OnInit {
 
   generateForm: FormGroup;
+  imagenUrl: string = '';
 
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<GenerateComponent>, private productsService: ProductosService, private router: Router) {
     this.generateForm = this.fb.group({
@@ -26,11 +27,12 @@ export class GenerateComponent implements OnInit {
 
   generateProduct() {
     this.productsService.generateProduct(this.generateForm.value.name, this.generateForm.value.price, this.generateForm.value.description).subscribe((data: any) => {
-      if(window.location.href.includes('home')) {
-        window.location.reload();
-      }else{
-        this.router.navigate(['/home']);
-      }
+
+      if (window.location.href.includes('barcode')) window.location.reload();
+      else window.open('/barcode', '_blank');
+
+      if (window.location.href.includes('carrito')) window.location.reload();
+      
     });
     this.dialogRef.close(this.generateForm.value);
   }
