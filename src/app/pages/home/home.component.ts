@@ -59,14 +59,6 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  products = [
-    {id: 1, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-    {id: 2, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-    {id: 3, name: 'Halo', price: 1.0079, description: 'H', ammount: 1},
-    {id: 4, name: 'Zelda', price: 1.0079, description: 'H', ammount: 1},
-    {id: 5, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-    {id: 6, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-  ];
 
   selectedIndex: number = 0;
   columnsSchema: any = COLUMNS_SCHEMA;
@@ -80,7 +72,7 @@ export class HomeComponent implements OnInit {
   productToEdit: boolean = false;
 
   nombre: string = '';
-  precio: number = 1;
+  precio: number = 0;
   descripcion: string = '';
 
   idToEdit: number = 0;
@@ -109,7 +101,6 @@ export class HomeComponent implements OnInit {
   }
 
   AddCart(element: any, ammount: any){
-    // this.router.navigate(['/carrito']);
     this.Activate(element);
     this.productsService.addProductToCart(element,ammount).subscribe((response: any) => {
     });
@@ -128,43 +119,29 @@ export class HomeComponent implements OnInit {
         this.noData = false;
       }
     });
-    // this.filter = this.products.filter((item: any) => {
-    //    return item.name.toLowerCase().includes(filterValue.toLowerCase())
-    // })
-    // if(this.filter.length == 0){
-    //   this.noData = true;
-    // }else{
-    //   this.noData = false;
-    // }
-
   }
 
   deleteProduct(element: any, id: any){
     if(confirm("Estás seguro de querer eliminar el producto "+element)) {
       this.productsService.deleteProduct(id).subscribe((data: any) => {
-        window.location.reload();
+        this.ngOnInit();
       });
     }
   }
 
   editProduct(id: any){
     if(this.idToEdit == id){
-      this.idToEdit = -1;
       const data: {name?: string, price?: number, description?: string} = {name: this.nombre, price: this.precio, description: this.descripcion};
-      // , price: this.precio, description: this.descripcion};
-      if(this.nombre == ''){
-        delete data.name;
-      }if(this.precio == 1){
-        delete data.price;
-      }if(this.descripcion == ''){
-        delete data.description;
-      }
-      console.log(data);
+
+      if (this.nombre == '')       delete data.name;
+      if (this.precio == 0)        delete data.price;
+      if (this.descripcion == '')  delete data.description;
 
       this.productsService.editProduct(id, data).subscribe((data: any) => {
-        console.log(data);
-
+          this.ngOnInit();
       });
+
+      this.idToEdit = -1;
     }else{
       this.idToEdit = id;
     }

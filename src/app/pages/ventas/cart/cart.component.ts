@@ -28,17 +28,8 @@ export class CartComponent implements OnInit {
       this.cart = [];
       for(const prop in data.sales[this.data.i].cart) {
         this.cart.push(data.sales[this.data.i].cart[prop]);
-        // console.log(data.sales[this.data.id-1].cart[prop]);
-
       }
-      // data.sales[this.data.id-1].cart.forEach((sale: any) => {
-      //   // console.log(sale);
-
-      //   // this.cart.push();
-      // });
       data.sales[this.data.i].cart;
-      // console.log(data.sales[this.data.id-1].cart);
-
     });
   }
 

@@ -4,14 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProductosService } from 'src/app/shared/services/productos.service';
 
-const ELEMENT_DATA: never[] = [
-  // {id: 1, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-  // {id: 2, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 2},
-  // {id: 3, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 3},
-  // {id: 4, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 4},
-  // {id: 5, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 5},
-  // {id: 6, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
-];
 
 const COLUMNS_SCHEMA = [
   {
@@ -80,9 +72,7 @@ export class CarritoComponent implements OnInit {
 
   onEnterKeyPressed(event: any) {
     this.productsService.addProductToCart(parseInt(this.barcode),1).subscribe((data: any) => {
-      console.log(data);
-
-      window.location.reload();
+      this.ngOnInit();
     });
     this.barcode = ''
   }
