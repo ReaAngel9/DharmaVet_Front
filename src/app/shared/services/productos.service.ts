@@ -49,4 +49,12 @@ export class ProductosService {
   generateProduct(name: string, price: number, description: string){
     return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description});
   }
+
+  deleteProduct(id: number){
+    return this.httpClient.delete(this.url + '/products/' + id);
+  }
+
+  editProduct(id: number, data: any){
+    return this.httpClient.put(this.url + '/products/' + id, data);
+  }
 }

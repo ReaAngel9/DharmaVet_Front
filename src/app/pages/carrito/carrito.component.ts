@@ -4,14 +4,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProductosService } from 'src/app/shared/services/productos.service';
 
-// export interface SalesData {
-//   name: string;
-//   id: number;
-//   price: number;
-//   description: string;
-//   ammount: number;
-// }
-
 const ELEMENT_DATA: never[] = [
   // {id: 1, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 1},
   // {id: 2, name: 'Hydrogen', price: 1.0079, description: 'H', ammount: 2},
@@ -70,20 +62,29 @@ export class CarritoComponent implements OnInit {
   subtotal: number = 0;
   descuento: number = 0;
   total: number = 0;
-  ammount: any = 0;
+  ammount: any = 1;
   update: boolean = false;
   editAmmount: any = 0;
   id: number = 0;
   paymentMethod: string = 'Cash';
+  barcode: string = '';
 
   shoppingcartForm: FormGroup;
-
   constructor(private fb: FormBuilder, private router: Router, private productsService: ProductosService) {
     this.shoppingcartForm = this.fb.group({
       name: ['', Validators.required],
       price: ['', Validators.required, Validators.min(0)],
       description: ['', Validators.required],
     });
+  }
+
+  onEnterKeyPressed(event: any) {
+    this.productsService.addProductToCart(parseInt(this.barcode),1).subscribe((data: any) => {
+      console.log(data);
+
+      window.location.reload();
+    });
+    this.barcode = ''
   }
 
   ngOnInit(): void {
@@ -113,7 +114,7 @@ export class CarritoComponent implements OnInit {
       this.productsService.addProductToCart(id, ammount).subscribe((data: any) => {
         this.ngOnInit();
       });
-      this.ammount = 0;
+      this.ammount = 1;
     }else{
       this.id = id;
     }
@@ -132,7 +133,7 @@ export class CarritoComponent implements OnInit {
 
   pagar(){
     // Agregar a la base de datos
-    this.productsService.sendSaleFromCart(this.total, this.paymentMethod, (this.descuento != 0)?this.descuento*10:0).subscribe((data: any) => {});
+    this.productsService.sendSaleFromCart(this.total, this.paymentMethod, (this.descuento != 0)?(this.descuento*100)/this.total:0).subscribe((data: any) => {});
     this.router.navigate(['/home']);
   }
 }

@@ -77,6 +77,13 @@ export class HomeComponent implements OnInit {
   noData: boolean = false;
   filter: any;
   inputForm: FormGroup;
+  productToEdit: boolean = false;
+
+  nombre: string = '';
+  precio: number = 1;
+  descripcion: string = '';
+
+  idToEdit: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -132,4 +139,34 @@ export class HomeComponent implements OnInit {
 
   }
 
+  deleteProduct(element: any, id: any){
+    if(confirm("Estás seguro de querer eliminar el producto "+element)) {
+      this.productsService.deleteProduct(id).subscribe((data: any) => {
+        window.location.reload();
+      });
+    }
+  }
+
+  editProduct(id: any){
+    if(this.idToEdit == id){
+      this.idToEdit = -1;
+      const data: {name?: string, price?: number, description?: string} = {name: this.nombre, price: this.precio, description: this.descripcion};
+      // , price: this.precio, description: this.descripcion};
+      if(this.nombre == ''){
+        delete data.name;
+      }if(this.precio == 1){
+        delete data.price;
+      }if(this.descripcion == ''){
+        delete data.description;
+      }
+      console.log(data);
+
+      this.productsService.editProduct(id, data).subscribe((data: any) => {
+        console.log(data);
+
+      });
+    }else{
+      this.idToEdit = id;
+    }
+  }
 }

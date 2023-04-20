@@ -79,3 +79,32 @@ img{
 .carousel-indicators{
     background-color: #dd1212a6;
 }
+
+
+mat-card-title
+{
+  input{
+    width: 100%;
+    border-radius: 0.8rem;
+    cursor: pointer;
+  }
+}
+
+mat-card-subtitle
+{
+  input{
+    width: 100%;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    text-align: center;
+  }
+}
+
+mat-card-content
+{
+  input{
+    width: 100%;
+    border-radius: 0.8rem;
+    cursor: pointer;
+  }
+}

@@ -18,8 +18,8 @@
     </ng-container>
 
     <ng-container matColumnDef="descuento">
-        <th mat-header-cell *matHeaderCellDef> % Descuento </th>
-        <td mat-cell *matCellDef="let element"> {{element.percentage_discount}} </td>
+        <th mat-header-cell *matHeaderCellDef> Descuento </th>
+        <td mat-cell *matCellDef="let element"> {{(element.percentage_discount/100) * element.total}} </td>
     </ng-container>
 
     <ng-container matColumnDef="subtotal">

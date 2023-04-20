@@ -1,8 +1,12 @@
 <div class="full-container">
     <div class="container-text-center">
         <h1 class="my-4">Resumen de compra</h1>
-        <button mat-raised-button color="primary" (click)="tarjeta()">Tarjeta</button>
-        <button mat-raised-button color="primary" (click)="efectivo()">Efectivo</button>
+        <mat-form-field>
+          <mat-label>Código de Producto</mat-label>
+          <input matInput class="barcode" type="text" value="Código" [(ngModel)]="barcode" (keyup.enter)="onEnterKeyPressed(barcode)" >
+        </mat-form-field>
+          <button mat-raised-button color="primary" (click)="tarjeta()">Tarjeta</button>
+          <button mat-raised-button color="primary" (click)="efectivo()">Efectivo</button>
     </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
