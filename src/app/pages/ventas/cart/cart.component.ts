@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProductosService } from 'src/app/shared/services/productos.service';
 
 @Component({
   selector: 'app-cart',
@@ -9,19 +11,26 @@ export class CartComponent implements OnInit {
 
   displayedTitleCart: string[] = ['Nombre', 'Precio', 'Descripción', 'Cantidad'];
 
-  cart = [
-    {
-      id: 1,
-      name: 'Hydrogen',
-      price: 1.0079,
-      description: 'H',
-      ammount: 1
-    }
+  cart: any = [
+    // {
+    //   id: 1,
+    //   name: 'Hydrogen',
+    //   price: 1.0079,
+    //   description: 'H',
+    //   ammount: 1
+    // }
   ];
 
-  constructor() { }
+  constructor(private productsService: ProductosService, @Inject(MAT_DIALOG_DATA) public data: {i: any}) { }
 
   ngOnInit(): void {
+    this.productsService.getSales().subscribe((data: any) => {
+      this.cart = [];
+      for(const prop in data.sales[this.data.i].cart) {
+        this.cart.push(data.sales[this.data.i].cart[prop]);
+      }
+      data.sales[this.data.i].cart;
+    });
   }
 
 }

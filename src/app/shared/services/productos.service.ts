@@ -30,7 +30,31 @@ export class ProductosService {
     return this.httpClient.get(this.url + '/sales/cart');
   }
 
+  deleteProductFromCart(id: any){
+    return this.httpClient.delete(this.url + '/sales/remove', { body: { 'id': id } });
+  }
+
+  deleteCart(){
+    return this.httpClient.delete(this.url + '/sales/clean');
+  }
+
+  sendSaleFromCart(total : number, paymentMethod: string, percentageDiscount: number){
+    return this.httpClient.post(this.url + '/sales/new', { 'total': total, 'payment_method': paymentMethod, 'percentage_discount': percentageDiscount });
+  }
+
   getSales() {
     return this.httpClient.get(this.url + '/sales');
+  }
+
+  generateProduct(name: string, price: number, description: string){
+    return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description});
+  }
+
+  deleteProduct(id: number){
+    return this.httpClient.delete(this.url + '/products/' + id);
+  }
+
+  editProduct(id: number, data: any){
+    return this.httpClient.put(this.url + '/products/' + id, data);
   }
 }
