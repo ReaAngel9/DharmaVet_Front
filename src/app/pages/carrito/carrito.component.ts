@@ -124,7 +124,7 @@ export class CarritoComponent implements OnInit {
 
   pagar(){
     // Agregar a la base de datos
-    this.productsService.sendSaleFromCart(this.total, this.paymentMethod, (this.descuento != 0)?((this.descuento*100)/this.total):0).subscribe((data: any) => {});
+    this.productsService.sendSaleFromCart(this.paymentMethod).subscribe((data: any) => {});
     this.router.navigate(['/home']);
   }
 }

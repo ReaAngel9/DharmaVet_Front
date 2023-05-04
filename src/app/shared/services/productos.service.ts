@@ -38,8 +38,8 @@ export class ProductosService {
     return this.httpClient.delete(this.url + '/sales/clean');
   }
 
-  sendSaleFromCart(total : number, paymentMethod: string, percentageDiscount: number){
-    return this.httpClient.post(this.url + '/sales/new', { 'total': total, 'payment_method': paymentMethod, 'percentage_discount': percentageDiscount });
+  sendSaleFromCart(paymentMethod: string){
+    return this.httpClient.post(this.url + '/sales/new', {'payment_method': paymentMethod});
   }
 
   getSales() {
