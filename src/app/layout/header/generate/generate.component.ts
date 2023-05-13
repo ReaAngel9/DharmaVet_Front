@@ -31,7 +31,7 @@ export class GenerateComponent implements OnInit {
       if (window.location.href.includes('barcode')) window.location.reload();
       else window.open('/barcode', '_blank');
 
-      if (window.location.href.includes('carrito')) window.location.reload();
+      if (window.location.href.includes('home')) window.location.reload();
       
     });
     this.dialogRef.close(this.generateForm.value);

@@ -71,7 +71,8 @@ export class CarritoComponent implements OnInit {
   }
 
   onEnterKeyPressed(event: any) {
-    this.barcode = this.barcode.slice(0, -1);
+    // this.barcode = this.barcode.slice(0, -1);
+    this.barcode = this.barcode;
     this.productsService.addProductToCart(parseInt(this.barcode),1).subscribe((data: any) => {
       this.ngOnInit();
     });
