@@ -63,18 +63,16 @@ export class VentasComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.productsService.getSales().subscribe((data: any) => {
-      console.log(data.sales);
 
       this.filter = data.sales.filter((sale: any) => {
-        console.log(sale['id'].toString().toLowerCase().includes(filterValue.trim().toLowerCase()));
 
-        return
-        sale['id'].toString().toLowerCase().includes(filterValue.trim().toLowerCase());
-        // (sale.date.toLowerCase().includes(filterValue.trim().toLowerCase())) ||
-        // (sale.percentage_discount.toString().toLowerCase().includes(filterValue.trim().toLowerCase())) ||
-        // (sale.subtotal.toString().toLowerCase().includes(filterValue.trim().toLowerCase())) ||
-        // (sale.payment_method.toLowerCase().includes(filterValue.trim().toLowerCase())) ||
-        // (sale.total.toString().toLowerCase().includes(filterValue.trim().toLowerCase()));
+
+        return   sale['id'].toString().toLowerCase().includes(filterValue.trim().toLowerCase()) ||
+        (sale.date.toLowerCase().includes(filterValue.trim().toLowerCase())) ||
+        (sale.percentage_discount.toString().toLowerCase().includes(filterValue.trim().toLowerCase())) ||
+        (sale.subtotal.toString().toLowerCase().includes(filterValue.trim().toLowerCase())) ||
+        (sale.payment_method.toLowerCase().includes(filterValue.trim().toLowerCase())) ||
+        (sale.total.toString().toLowerCase().includes(filterValue.trim().toLowerCase()));
       });
       this.dataSource = this.filter;
       if(this.filter.length == 0){

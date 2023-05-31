@@ -25,6 +25,13 @@ export class ProductosService {
       ammount: ammount
     });
   }
+  
+  editProductFromCart(id: any, ammount: any) {
+    return this.httpClient.post(this.url + '/sales/edit', {
+      id: id,
+      ammount: ammount
+    });
+  }
 
   getCart(){
     return this.httpClient.get(this.url + '/sales/cart');
@@ -46,8 +53,8 @@ export class ProductosService {
     return this.httpClient.get(this.url + '/sales');
   }
 
-  generateProduct(name: string, price: number, description: string){
-    return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description, responseType: 'blob'});
+  generateProduct(name: string, price: number, description: string, id: number){
+    return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description, barcode:id, responseType: 'blob'});
   }
 
   deleteProduct(id: number){
@@ -60,6 +67,14 @@ export class ProductosService {
 
   getBarcode(id: number){
     return this.httpClient.get(this.url + '/products/barcode/' + id, { responseType: 'blob' });
+  }
+
+  getPrinters(){
+    return this.httpClient.get('localhost:8000/printers');
+  }
+
+  printTicket(){
+    return this.httpClient.post('localhost:5656/command/Seafon', JSON.stringify(['Hola mundo']));
   }
 
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ProductosService } from 'src/app/shared/services/productos.service';
+import ConectorPluginV3 from 'src/app/ConectorPluginV3';
 
 
 const COLUMNS_SCHEMA = [
@@ -49,6 +50,10 @@ export class CarritoComponent implements OnInit {
   dataSource: any = [];
   columnsSchema: any = COLUMNS_SCHEMA;
 
+  //Impresión de Tickets/Barcodes
+  impresoraSeleccionada: any = 'Seafon';
+  impresoras: any = [];
+  mensaje: any = '';
 
   amountActive: boolean = false;
   subtotal: number = 0;
@@ -84,6 +89,9 @@ export class CarritoComponent implements OnInit {
       this.dataSource = data;
       this.efectivo();
     });
+    this.productsService.getPrinters().subscribe((data: any) => {
+      this.impresoras = data;
+    });
   }
 
   tarjeta(){
@@ -100,15 +108,23 @@ export class CarritoComponent implements OnInit {
     this.paymentMethod = 'Cash';
   }
 
-  edit(id: any, ammount: any){
+  edit(id: any, ammount: any, oldAmmount: any){
     if (this.id == id){
       this.id = -1;
-      this.productsService.addProductToCart(id, ammount).subscribe((data: any) => {
-        this.ngOnInit();
-      });
+      if (ammount != oldAmmount && ammount > 0){  
+        this.productsService.editProductFromCart(id, ammount).subscribe((data: any) => {
+          this.ngOnInit();
+        });
+      }
       this.ammount = 1;
     }else{
       this.id = id;
+      for (let i = 0; i < this.dataSource.length; i++) {
+        if (this.dataSource[i].id == id){
+          this.ammount = this.dataSource[i].ammount;
+          break;
+        }
+      }
     }
   }
 
@@ -128,4 +144,39 @@ export class CarritoComponent implements OnInit {
     this.productsService.sendSaleFromCart(this.paymentMethod).subscribe((data: any) => {});
     this.router.navigate(['/home']);
   }
+
+  async ticket(){
+    // if (!this.mensaje) {
+    //   return alert('No hay nada que imprimir');
+    // }
+    const impresora = new ConectorPluginV3();
+    impresora.Iniciar()
+    .EstablecerAlineacion(ConectorPluginV3.ALINEACION_CENTRO)
+    // .EscribirTexto('Hola Mundo')
+    // .Feed(1)
+    .CargarImagenLocalEImprimir('C:/Users/crist/OneDrive/Desktop/ITESO/8 Semestre/Diseño de Software/Proyecto_Final_Back/DharmaVet_Back/Back/barcode.png', 0, 440)
+    // .ImprimirCodigoDeBarrasEan("1234567890123", 48, 96, 0)
+
+    const response = await impresora.imprimirEn('Seafon');
+    console.log(this.impresoras);
+    
+    if (response == true) {
+      alert('Impresión exitosa');
+    } else {
+      alert('Error al imprimir: ' + response);
+    }
+  }
+
+  // async ticket(){
+  //   var arr = [];
+  //   var dat = {
+  //     type:"text",
+  //     data:"Hola mundo" +"\n"
+  //   };
+  //   arr.push(dat);
+  //   console.log(JSON.stringify(arr));
+  //   this.productsService.printTicket().subscribe((data: any) => {
+      
+  //   });
+  // }
 }

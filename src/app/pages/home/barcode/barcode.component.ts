@@ -23,9 +23,7 @@ export class BarcodeComponent implements OnInit {
       };
     });
     this.productsService.getProducts().subscribe((data: any) => {
-      this.products = data.products;
-      console.log(this.products);
-      
+      this.products = data.products;     
     });
   }
 

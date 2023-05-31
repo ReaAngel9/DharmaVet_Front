@@ -26,7 +26,10 @@ export class GenerateComponent implements OnInit {
   }
 
   generateProduct() {
-    this.productsService.generateProduct(this.generateForm.value.name, this.generateForm.value.price, this.generateForm.value.description).subscribe((data: any) => {
+    if (this.generateForm.value.barcode == '' ) {
+      this.generateForm.value.barcode = 0;
+    }
+    this.productsService.generateProduct(this.generateForm.value.name, this.generateForm.value.price, this.generateForm.value.description, parseInt(this.generateForm.value.barcode)).subscribe((data: any) => {
 
       if (window.location.href.includes('barcode')) window.location.reload();
       else window.open('/barcode', '_blank');
