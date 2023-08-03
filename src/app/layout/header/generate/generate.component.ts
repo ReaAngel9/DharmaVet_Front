@@ -19,7 +19,7 @@ export class GenerateComponent implements OnInit {
       name: ['', Validators.required],
       price: ['', Validators.required],
       description: ['', Validators.required],
-      barcodeid: ['', Validators.required]
+      barcodeid:  []
     });
   }
 
