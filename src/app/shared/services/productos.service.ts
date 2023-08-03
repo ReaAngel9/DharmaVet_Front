@@ -53,8 +53,8 @@ export class ProductosService {
     return this.httpClient.get(this.url + '/sales');
   }
 
-  generateProduct(name: string, price: number, description: string, id: number){
-    return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description, barcode:id, responseType: 'blob'});
+  generateProduct(name: string, price: number, description: string, barcodeid: number){
+    return this.httpClient.post(this.url + '/products/new', { name: name, price: price, description: description, barcodeid:barcodeid, responseType: 'blob'});
   }
 
   deleteProduct(id: number){

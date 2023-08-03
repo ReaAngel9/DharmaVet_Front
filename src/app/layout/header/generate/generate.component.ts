@@ -19,17 +19,18 @@ export class GenerateComponent implements OnInit {
       name: ['', Validators.required],
       price: ['', Validators.required],
       description: ['', Validators.required],
+      barcodeid: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
   }
 
-  generateProduct() {
-    if (this.generateForm.value.barcode == '' ) {
-      this.generateForm.value.barcode = 0;
+  generateProduct() {   
+    if (this.generateForm.value.barcodeid == '' ) {
+      this.generateForm.value.barcodeid = 0;
     }
-    this.productsService.generateProduct(this.generateForm.value.name, this.generateForm.value.price, this.generateForm.value.description, parseInt(this.generateForm.value.barcode)).subscribe((data: any) => {
+    this.productsService.generateProduct(this.generateForm.value.name, this.generateForm.value.price, this.generateForm.value.description, this.generateForm.value.barcodeid).subscribe((data: any) => {
 
       if (window.location.href.includes('barcode')) window.location.reload();
       else window.open('/barcode', '_blank');
