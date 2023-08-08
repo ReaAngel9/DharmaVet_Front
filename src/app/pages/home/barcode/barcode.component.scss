@@ -1,55 +1,67 @@
-.img-container {
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-  }
+.main-container {
+  display: flex;
+  height: 100%;
   
+  .img-container {
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      width: 50%;
+      float: left;
+    }
+    
   .card-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-  
+
+    // width: 50%;
+    width: calc(50% - 20px);
+    float: left;
+    overflow-y: auto;
+    max-height: 100%;
+
     .main-card {
       margin: 1rem;
       max-width: 400px;
       width: 100%;
-  
+
       mat-card-header {
         display: flex;
         flex-direction: column;
         align-items: center;
-  
+
         mat-card-title {
           font-size: 1.5rem;
           font-weight: bold;
           margin-bottom: 0.5rem;
         }
-  
+
         mat-card-subtitle {
           font-size: 1rem;
           font-weight: 600;
         }
       }
-  
+
       mat-card-content {
         padding-top: 1rem;
-  
+
         p {
           font-size: 1rem;
           line-height: 1.4;
         }
       }
-  
+
       mat-card-actions {
         display: flex;
         justify-content: flex-end;
         padding-top: 1rem;
-  
+
         button {
           margin-left: 1rem;
         }
       }
     }
   }
-  
+}
