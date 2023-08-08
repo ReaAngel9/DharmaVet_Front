@@ -63,6 +63,11 @@ export class HeaderComponent implements OnInit {
       routerLink: 'ventas',
       icon: 'fa fa-tag',
       label: 'Ventas'
+    },
+    {
+      routerLink: 'barcode',
+      icon: 'fa fa-barcode',
+      label: 'Códigos'
     }
 ];
 
