@@ -35,22 +35,6 @@
             font-weight: 700;
             color: #255ec2;
         }
-
-        .btn-close{
-            margin-left: auto;
-            cursor: pointer;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            background-color: transparent;
-            border: none;
-            // background-color: rgb(222, 145, 49);
-
-            .fa-times{
-                color: #fff;
-                font-size: 24px;
-            }
-        }
     }
 }
 
@@ -59,14 +43,6 @@
     margin-right: 0.5rem;
     font-weight: 700;
     color: #f3faf8;
-}
-
-.btn-close{
-    background-color: transparent;
-    color: #f9f9f9;
-    border: none;
-    cursor: pointer;
-    font-size: 24px;
 }
 
 img{
