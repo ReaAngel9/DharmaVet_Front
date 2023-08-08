@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
     {
       routerLink: 'home',
       icon: 'fa fa-home',
-      label: 'Home'
+      label: 'Inicio'
     },
     {
       routerLink: 'carrito',
