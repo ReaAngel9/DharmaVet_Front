@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import {MatTableDataSource} from '@angular/material/table';
 import { ProductosService } from 'src/app/shared/services/productos.service';
 import { CartComponent } from './cart/cart.component';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
 
 export interface SalesData {
   fecha: Date;
@@ -13,40 +15,44 @@ export interface SalesData {
   total: number;
 }
 
-// const ELEMENT_DATA: SalesData[] = [
-//   {id: 1, fecha: 'Hydrogen', descuento: 1.0079, subtotal: 123, pago: "1", total: 123},
-//   {id: 2, fecha: 'Halo', descuento: 2.0079, subtotal: 123, pago: "1", total: 123},
-//   {id: 3, fecha: 'Zelda', descuento: 3.0079, subtotal: 123, pago: "1", total: 123},
-//   {id: 4, fecha: 'Hydrogen', descuento: 4.0079, subtotal: 123, pago: "1", total: 123},
-//   {id: 5, fecha: 'Hydrogen', descuento: 5.0079, subtotal: 123, pago: "1", total: 123},
-//   {id: 6, fecha: 'Hydrogen', descuento: 6.0079, subtotal: 123, pago: "1", total: 123},
-// ];
-
 
 @Component({
   selector: 'app-ventas',
   templateUrl: './ventas.component.html',
-  styleUrls: ['./ventas.component.scss']
+  styleUrls: ['./ventas.component.scss'], 
 })
 export class VentasComponent implements OnInit {
 
+  //Table Variables
   displayedColumns: string[] = ['id', 'fecha', 'descuento', 'subtotal', 'pago', 'total'];
   dataSource: any = [];
-
   selectedRowIndex: number = 0;
+
+  //Normal Filter Variables
   filter: any;
   noData: boolean = false;
+
+  //Date Filter Variables
+  dateFilterData: any;
+  startDate = new Date(2023, 0, 1);
+  endDate = new Date();
+
+  //Summary Variables
+  rangeDate: string = '';
+  discountSum: number = 0;
+  subtotalSum: number = 0;
+  totalSum: number = 0;
 
   constructor(private dialog: MatDialog, private productsService: ProductosService) { }
 
   ngOnInit(): void {
-    this.productsService.getSales().subscribe((data: any) => {
-      this.filter = data.sales;
-      this.dataSource = data.sales
-    });
+    this.getSales();
+    this.startDate = new Date(2023, 0, 1);
+    this.endDate = new Date();
+    this.getRangeDate();
   }
 
-  Select(id : number) {
+  SaleSummary(id : number) {
     this.selectedRowIndex = id;
     for (const i in this.dataSource) {
       if (this.dataSource[i].id == id) {
@@ -57,6 +63,45 @@ export class VentasComponent implements OnInit {
         });
 
       }
+    }
+  }
+
+
+  cleanDateFilter() {
+    this.startDate = new Date(2023, 0, 1);
+    this.endDate = new Date();
+    this.getRangeDate();
+    this.productsService.getSales().subscribe((data: any) => {
+      this.dataSource = data.sales;
+    });
+  }
+
+
+  dateFilter (event: any, fullDate: boolean) {
+    const filterValue = event.target.value;
+    console.log(fullDate, filterValue);
+    
+    if (fullDate) {// End date
+      this.endDate = new Date(filterValue);
+      this.getRangeDate();
+    } else { //Start date
+      this.startDate = new Date(filterValue);
+    }
+    
+    if (fullDate) {
+      this.productsService.getSales().subscribe((data: any) => {
+
+        this.dateFilterData = data.sales.filter((sale: any) => {
+          const saleDate = this.getDate(sale.date);
+          return saleDate >= this.startDate && saleDate <= this.endDate;
+        });
+
+        this.dataSource = this.dateFilterData;
+        this.noData = !(this.dateFilterData.length == 0);
+        this.getDiscountSum();
+        this.getSubtotalSum();
+        this.getTotalSum();
+      });
     }
   }
 
@@ -89,5 +134,48 @@ export class VentasComponent implements OnInit {
     // this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  getSales () {
+    this.productsService.getSales().subscribe((data: any) => {
+      this.dataSource = data.sales
+      this.getDiscountSum();
+      this.getSubtotalSum();
+      this.getTotalSum();
+    });
+  }
+
+  getDate (date: string) : Date {
+    const inDate = date.split(' ')[0];
+    const day = Number(inDate.split('/')[0]);    
+    const month = Number(inDate.split('/')[1]);
+    const year = Number(inDate.split('/')[2]);
+
+
+    return new Date (year, month-1, day);
+  }
+
+  getRangeDate () {
+    this.rangeDate = this.startDate.toLocaleDateString() + ' - ' + this.endDate.toLocaleDateString();
+  }
+
+  getDiscountSum () {
+    this.discountSum = 0;
+    for (const i in this.dataSource) {
+      this.discountSum += (this.dataSource[i].percentage_discount/100)*this.dataSource[i].subtotal;
+    }
+  }
+
+  getSubtotalSum () {
+    this.subtotalSum = 0;
+    for (const i in this.dataSource) {
+      this.subtotalSum += this.dataSource[i].subtotal;
+    }
+  }
+
+  getTotalSum () {
+    this.totalSum = 0;
+    for (const i in this.dataSource) {    
+      this.totalSum += this.dataSource[i].total;
+    }
+  }
 
 }

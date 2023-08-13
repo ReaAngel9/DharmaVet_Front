@@ -1,48 +1,69 @@
-<mat-form-field class="filter">
+<!-- <mat-form-field class="filter">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input>
 </mat-form-field>
-<mat-icon>filter_list</mat-icon>
+<mat-icon>filter_list</mat-icon> -->
+    
+<mat-form-field>
+    <mat-date-range-input [rangePicker]="picker" [hidden]="true">
+    <input matStartDate (dateChange)="dateFilter($event, false)" [hidden]="true">
+    <input matEndDate (dateChange)="dateFilter($event, true)" [hidden]="true">
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+    <button mat-button color="primary" (click)="cleanDateFilter()">Limpiar Filtro</button>
+</mat-form-field>  
+
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
       <button>
-        <td mat-cell *matCellDef="let element" class="id" name="id" (click)="Select(element.id)"> {{element.id}} </td>
+        <td mat-cell *matCellDef="let element" class="id" name="id" (click)="SaleSummary(element.id)"> {{element.id}} </td>
       </button>
+      <th mat-header-cell *matFooterCellDef=""> Totales </th>
     </ng-container>
 
     <ng-container matColumnDef="fecha">
         <th mat-header-cell *matHeaderCellDef> Fecha </th>
         <td mat-cell *matCellDef="let element" class="name"> {{element.date}} </td>
+        <th mat-header-cell *matFooterCellDef> {{rangeDate}} </th>
     </ng-container>
 
     <ng-container matColumnDef="descuento">
         <th mat-header-cell *matHeaderCellDef> Descuento </th>
         <td mat-cell *matCellDef="let element"> {{(element.percentage_discount/100) * element.total}} </td>
+        <th mat-header-cell *matFooterCellDef> {{discountSum}} </th>
     </ng-container>
 
     <ng-container matColumnDef="subtotal">
         <th mat-header-cell *matHeaderCellDef> Subtotal </th>
         <td mat-cell *matCellDef="let element"> {{element.subtotal}} </td>
+        <th mat-header-cell *matFooterCellDef> {{subtotalSum}} </th>
     </ng-container>
 
     <ng-container matColumnDef="pago">
         <th mat-header-cell *matHeaderCellDef> Pago </th>
         <td mat-cell *matCellDef="let element"> {{element.payment_method}} </td>
+        <th mat-header-cell *matFooterCellDef></th>
     </ng-container>
 
     <ng-container matColumnDef="total">
         <th mat-header-cell *matHeaderCellDef> Total </th>
         <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+        <th mat-header-cell *matFooterCellDef> {{totalSum}} </th>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="sticky-top"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-header-row *matFooterRowDef="displayedColumns" class="sticky-bottom"></tr>
 
-    <tr class="mat-row" *matNoDataRow>
+    <!-- Esta parte vá con la del inicio, y es el filtro original -->
+    <!-- <tr class="mat-row" *matNoDataRow>
         <td *ngIf="noData"  class="mat-cell" colspan="4">No hay datos que coincidan con "{{input.value}}"</td>
-    </tr>
+    </tr> -->
 
 
 </table>
+

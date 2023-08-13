@@ -89,9 +89,11 @@ export class CarritoComponent implements OnInit {
       this.dataSource = data;
       this.efectivo();
     });
-    this.productsService.getPrinters().subscribe((data: any) => {
-      this.impresoras = data;
-    });
+
+    // Esto es parte de la impresión de Tickets/Barcodes
+    // this.productsService.getPrinters().subscribe((data: any) => {
+    //   this.impresoras = data;
+    // });
   }
 
   tarjeta(){
