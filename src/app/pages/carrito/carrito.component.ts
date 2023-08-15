@@ -87,7 +87,9 @@ export class CarritoComponent implements OnInit {
   ngOnInit(): void {
     this.productsService.getCart().subscribe((data: any) => {
       this.dataSource = data;
-      this.efectivo();
+      this.efectivo(); // Iniciar el carrito con el método de pago en efectivo
+      // this.tarjeta(); // Iniciar el carrito con el método de pago con tarjeta
+
     });
 
     // Esto es parte de la impresión de Tickets/Barcodes
@@ -133,6 +135,11 @@ export class CarritoComponent implements OnInit {
   delete(id: number){
     this.dataSource = this.dataSource.filter((item: any) => item.id !== id);
     this.productsService.deleteProductFromCart(id).subscribe((data: any) => {
+      if (this.paymentMethod == 'Cash'){
+        this.efectivo();
+      }else{
+        this.tarjeta();
+      }
     });
   }
 

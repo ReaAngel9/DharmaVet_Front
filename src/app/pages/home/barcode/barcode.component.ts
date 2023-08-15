@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ProductosService } from 'src/app/shared/services/productos.service';
 
 @Component({
@@ -12,10 +13,20 @@ export class BarcodeComponent implements OnInit {
   barcode: string = '';
   products: any = [];
 
-  constructor(private productsService: ProductosService) { }
+  routerBarcodeID: any = 0;
+
+  constructor(
+    private productsService: ProductosService, 
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.productsService.getBarcode(0).subscribe((data: any) => {
+    this.route.paramMap.subscribe(params => {      
+      if (params.get('id') != null) {
+        this.routerBarcodeID = params.get('id') as string;
+      }
+    });
+
+    this.productsService.getBarcode(this.routerBarcodeID).subscribe((data: any) => {
       const reader = new FileReader();
       reader.readAsDataURL(data);
       reader.onloadend = () => {

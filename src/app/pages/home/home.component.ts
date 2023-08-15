@@ -149,7 +149,7 @@ export class HomeComponent implements OnInit {
 
   barcodeRedirect(id:any){
     this.productsService.getBarcode(id).subscribe((data: any) => {
-      window.open('/barcode', '_blank');
+      this.router.navigate(['/barcode', id]);
     });
   }
 }

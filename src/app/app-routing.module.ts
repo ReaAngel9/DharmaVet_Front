@@ -8,9 +8,10 @@ import { BarcodeComponent } from './pages/home/barcode/barcode.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  {path: 'carrito', component: CarritoComponent},
-  {path: 'ventas', component: VentasComponent},
-  {path: 'barcode', component: BarcodeComponent}
+  { path: 'carrito', component: CarritoComponent },
+  { path: 'ventas', component: VentasComponent },
+  { path: 'barcode', component: BarcodeComponent },
+  { path: 'barcode/:id', component: BarcodeComponent }
 ];
 
 @NgModule({
